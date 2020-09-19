@@ -23,13 +23,22 @@ h1 {
   display: flex;
   justify-content: space-between;
   max-width: 600px;
-  margin: 60px auto 20px auto;
+  margin: 20px auto 20px auto;
+}
+
+.game-title {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: 170%;
+  color: #000;
 }
 
 .score-text {
   margin: 0;
   padding-top: 10px;
   padding-bottom: 10px;
+  color: #000;
+  font-size: 125%;
 }
 
 .start-btn {
@@ -67,4 +76,13 @@ h1 {
 .apple {
   background-color: #000;
   border-radius: 100%;
+}
+
+.builtby-text {
+  font-size: 70%;
+  text-align: center;
+  color: #fff;
+  opacity: 0.8;
+  text-align: center;
+  margin-top: 40px;
 }

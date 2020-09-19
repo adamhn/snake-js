@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-161772054-4"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-161772054-4");
+    </script>
+
     <meta charset="UTF-8" />
     <title>SnakeJS - Vanilla JavaScript</title>
     <meta
@@ -23,6 +38,10 @@
       </div>
       <div class="grid"></div>
     </div>
+    <p class="builtby-text">
+      Built by <a href="https://www.adamhn.com">Adam Hassan</a> Source code
+      available on <a href="https://github.com/adamhn/snake-js">GitHub</a>
+    </p>
     <script src="main.js"></script>
   </body>
 </html>
