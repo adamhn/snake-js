@@ -6,7 +6,7 @@
   const scoreDisplay = document.querySelector(".score");
   const startButton = document.querySelector(".start-btn");
 
-  const width = 10;
+  const width = 30;
 
   /**
    * Variables
@@ -17,8 +17,9 @@
   let appleIndex = 0;
 
   let score = 0;
-  let intervalTime = 1000; // Start at speed 1 sec
-  let speed = 0.9;
+  let intervalTime = 500; // Start at speed 1 sec
+  let speed = 0.5;
+  let speedInterval = intervalTime * speed;
 
   let timerId;
 
@@ -38,6 +39,7 @@
   function updateSnakePosition() {
     currentSnake.forEach((index) => gridArray[index].classList.add("snake"));
   }
+
   updateSnakePosition();
 
   function startGame() {
@@ -52,8 +54,9 @@
     intervalTime = 1000;
     generateApple();
     currentSnake.forEach((index) => gridArray[index].classList.add("snake"));
-    timerId = setInterval(move, 1000);
+    timerId = setInterval(move, speedInterval);
   }
+  startGame();
 
   function move() {
     if (
@@ -85,7 +88,6 @@
 
       // Speed up snake
       clearInterval(timerId);
-      speedInterval = intervalTime * speed;
       timerId = setInterval(move, speedInterval);
     }
 
@@ -98,8 +100,6 @@
     } while (gridArray[appleIndex].classList.contains("snake"));
     gridArray[appleIndex].classList.add("apple");
   }
-
-  generateApple();
 
   function keyPressed(e) {
     if (e.keyCode === 39) {
