@@ -3,6 +3,9 @@
    * Constants
    */
   const gridElement = document.querySelector(".grid");
+  const scoreDisplay = document.querySelector(".score");
+  const startButton = document.querySelector(".start-btn");
+
   const width = 10;
 
   /**
@@ -12,6 +15,12 @@
   let currentSnake = [2, 1, 0];
   let direction = 1;
   let appleIndex = 0;
+
+  let score = 0;
+  let intervalTime = 1000; // Start at speed 1 sec
+  let speed = 0.9;
+
+  let timerId;
 
   /**
    * Methods
@@ -31,51 +40,66 @@
   }
   updateSnakePosition();
 
-  function move() {
-    let snakeHeadPosition = currentSnake[0];
+  function startGame() {
+    // remove snake from grid
+    currentSnake.forEach((index) => gridArray[index].classList.remove("snake"));
+    gridArray[appleIndex].classList.remove("apple"); // remove apple
+    clearInterval(timerId);
+    currentSnake = [2, 1, 0]; // reset back to original position
+    score = 0;
+    scoreDisplay.textContent = score;
+    direction = 1;
+    intervalTime = 1000;
+    generateApple();
+    currentSnake.forEach((index) => gridArray[index].classList.add("snake"));
+    timerId = setInterval(move, 1000);
+  }
 
+  function move() {
     if (
-      (snakeHeadPosition + width >= width * width && direction === width) || //if snake has hit bottom
-      (snakeHeadPosition % width === width - 1 && direction === 1) || //if snake has hit right wall
-      (snakeHeadPosition % width === 0 && direction === -1) || //if snake has hit left wall
-      (snakeHeadPosition - width < 0 && direction === -width) || //if snake has hit top
-      gridArray[snakeHeadPosition + direction].classList.contains("snake") //if snake ran into itself
+      (gridArray[currentSnake[0]] + width >= width * width &&
+        direction === width) || //if snake has hit bottom
+      (gridArray[currentSnake[0]] % width === width - 1 && direction === 1) || //if snake has hit right wall
+      (gridArray[currentSnake[0]] % width === 0 && direction === -1) || //if snake has hit left wall
+      (gridArray[currentSnake[0]] - width < 0 && direction === -width) || //if snake has hit top
+      gridArray[currentSnake[0] + direction].classList.contains("snake") //if snake ran into itself
     )
       return clearInterval(timerId);
-
-    if (snakeHeadPosition % width === 9) {
-      // snake has hit right wall
-      console.log("snake hit right wall");
-    } else if (snakeHeadPosition % width === 0) {
-      // snake has hit left wall
-      console.log("snake hit left wall");
-    } else if (snakeHeadPosition - width < 0) {
-      // snake has hit top wall
-      console.log("snake hit top wall");
-    } else if (snakeHeadPosition + width >= 100) {
-      console.log("snake hit bottom wall");
-    }
 
     let tail = currentSnake.pop();
     gridArray[tail].classList.remove("snake");
 
     currentSnake.unshift(currentSnake[0] + direction);
+
+    //deal with snake head getting the apple
+    if (gridArray[currentSnake[0]].classList.contains("apple")) {
+      // remove class of apple
+      gridArray[currentSnake[0]].classList.remove("apple");
+
+      // grow snake by adding a class and growing the snake array
+      gridArray[tail].classList.add("snake");
+      currentSnake.push(tail);
+      generateApple();
+      score++;
+      scoreDisplay.textContent = score;
+
+      // Speed up snake
+      clearInterval(timerId);
+      speedInterval = intervalTime * speed;
+      timerId = setInterval(move, speedInterval);
+    }
+
     gridArray[currentSnake[0]].classList.add("snake");
-
-    console.log(currentSnake);
   }
-  move();
 
-  let timerId = setInterval(move, 1000);
-
-  function generateApples() {
+  function generateApple() {
     do {
       appleIndex = Math.floor(Math.random() * gridArray.length);
     } while (gridArray[appleIndex].classList.contains("snake"));
     gridArray[appleIndex].classList.add("apple");
   }
 
-  generateApples();
+  generateApple();
 
   function keyPressed(e) {
     if (e.keyCode === 39) {
@@ -97,4 +121,5 @@
    * Inits & Event Listeners
    */
   document.addEventListener("keyup", keyPressed);
+  startButton.addEventListener("click", startGame);
 })();
