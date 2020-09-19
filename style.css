@@ -1,0 +1,47 @@
+/*
+** SETUP STYLES
+*/
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.start-btn {
+  margin-bottom: 20px;
+}
+
+/*
+** GAME STYLES
+*/
+.grid {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 200px;
+  height: 200px;
+  border: 2px solid #000;
+}
+
+.grid-cell {
+  width: 20px;
+  height: 20px;
+}
+
+.snake {
+  background-color: #000;
+}
+
+.apple {
+  background-color: chartreuse;
+}
